@@ -1,8 +1,8 @@
 package geometries;
 import primitives.*;
-public class Tube implements Geometry{
+public class Tube extends RadialGeometry{
     private Ray axisRay;
-    private double radius;
+
 
     public Tube(Ray axisRay, double radius) {
         this.axisRay = axisRay;
