@@ -30,7 +30,6 @@ public class Point {
     public int hashCode() {
         return Objects.hash(xyz);
     }
-
     @Override
     public String toString() {
         return xyz.toString();
@@ -46,13 +45,14 @@ public class Point {
     }
     //distance(Point):double
     public double distance(Point point){
+        return Math.sqrt(distanceSquared(point));
+    };
+    public double distanceSquared(Point point1){
         return 0.0;
     }
-
     public Double3 getXyz() {
         return xyz;
     }
-
     public double getX() {
         return xyz.d1;
     }

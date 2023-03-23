@@ -1,8 +1,7 @@
 package geometries;
 import primitives.*;
-public class Sphere implements Geometry{
+public class Sphere extends RadialGeometry{
     Point center;
-    double radius;
 
     public Sphere(Point center, double radius) {
         this.center = center;

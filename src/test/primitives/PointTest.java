@@ -45,4 +45,13 @@ class PointTest {
         assertThrows(IllegalArgumentException.class, () -> p3.subtract(p3),"ERROR: couldn't subtract Vector 0,0,0");
 
     }
+
+    @Test
+    void distance() {
+
+    }
+    @Test
+    void distanceSquared() {
+
+    }
 }
