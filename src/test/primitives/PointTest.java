@@ -48,10 +48,10 @@ class PointTest {
 
     @Test
     void distance() {
-
+        assertequals(1.7320508075688772,p0.distance(p3)), "ERROR: couldn't calculate distance between p0 and p3");
     }
     @Test
     void distanceSquared() {
-
+        assertequals(14,p0.distance(p3)), "ERROR: couldn't calculate distance between p0 and p3");
     }
 }
