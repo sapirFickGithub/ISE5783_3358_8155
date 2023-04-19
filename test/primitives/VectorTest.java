@@ -10,7 +10,7 @@ class VectorTest {
     Vector v3 = new Vector(0.0, 3.0, -2.0);
 
     @Test
-    void add() {
+    void testAdd() {
         // ============ Equivalence Partitions Tests ==============
         // TC01: Test for adding two vectors
         Vector v4 = new Vector(-1.0, -2.0, -3.0);
