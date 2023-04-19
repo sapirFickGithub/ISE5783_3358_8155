@@ -48,7 +48,10 @@ public class Point {
         return Math.sqrt(distanceSquared(point));
     };
     public double distanceSquared(Point point1){
-        return 0.0;
+
+      return   (this.getX()-point1.getX())*(this.getX()-point1.getX())+
+              (this.getY()-point1.getY())*(this.getY()-point1.getY())+
+              (this.getZ()-point1.getZ())*(this.getZ()-point1.getZ());
     }
     public Double3 getXyz() {
         return xyz;

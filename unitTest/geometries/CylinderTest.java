@@ -9,8 +9,8 @@ class CylinderTest {
 
 
     void testGetNormalOnTop() {
-        Vector normal = cylinder.getNormal(new Point(0, 0, 1));
-        assertEquals(new Vector(0, 0, 1), normal);
+        Vector normal = cylinder.getNormal(new Point(0, 1, 0));
+        assertEquals(new Vector(0, 1, 0), normal, "top of the cylinder");
     }
 
 

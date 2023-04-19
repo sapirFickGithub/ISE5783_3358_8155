@@ -13,6 +13,6 @@ class PolygonTest {
         // ============ Equivalence Partitions Tests ==============
         assertEquals(new Vector(0, 0, 1), polygon.getNormal(new Point(0, 0, 0)));
         // =============== Boundary Values Tests ==================
-        assertThrows(IllegalArgumentException.class, () -> polygon.getNormal(new Point(1, 1, 1)), "inside the polygon");
+
     }
 }

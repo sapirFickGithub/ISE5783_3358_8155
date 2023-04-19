@@ -12,6 +12,6 @@ class SphereTest {
     @Test
     void getNormal() {
         Vector v=new Vector(0,4,0);
-        assertEquals(v,sphere.getNormal(new Point(0,4,0)));
+        assertEquals(v,sphere.getNormal(new Point(0,4,0)), "error in getNormal");
     }
 }

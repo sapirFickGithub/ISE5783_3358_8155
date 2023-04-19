@@ -12,7 +12,7 @@ Ray ray=new Ray(new Point(0,1,0),v);
     Tube tube=new Tube(ray,1);
     @Test
     void getNormal() {
-        Vector v=new Vector(0,1,0);
-        assertEquals(v,tube.getNormal(new Point(0,1,0)));
+        Vector v=new Vector(0,0,1);
+        assertEquals(v,tube.getNormal(new Point(0,0,1)));
     }
 }

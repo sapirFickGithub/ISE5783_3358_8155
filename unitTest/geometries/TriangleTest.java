@@ -15,6 +15,6 @@ class TriangleTest {
     @Test
     void getNormal() {
         Vector v=new Vector(0,1,0);
-assertEquals(triangle.getNormal(p3),0);
+    assertEquals(triangle.getNormal(p3),v,"error in getNormal");
     }
 }

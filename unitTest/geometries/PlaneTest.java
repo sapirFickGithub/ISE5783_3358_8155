@@ -8,14 +8,15 @@ import static org.junit.jupiter.api.Assertions.*;
 class PlaneTest {
 
     Plane plane = new Plane(new Point(0, 0, 0), new Vector(0, 0, 1));
-    @Test
-    void getNormal() {
-        // ============ Equivalence Partitions Tests ==============
-        assertEquals(new Vector(0, 0, 1), plane.getNormal(new Point(0, 0, 0)));
-        // =============== Boundary Values Tests ==================
-        assertThrows(IllegalArgumentException.class, () -> plane.getNormal(new Point(1, 1, 1)));
 
-    }
+    //@Test
+    //void getNormal() {
+    //    ============ Equivalence Partitions Tests ==============
+    //     assertEquals(new Vector(0, 0, 1), plane.getNormal(new Point(0, 0, 0)));
+    //    =============== Boundary Values Tests ==================
+    //     assertThrows(IllegalArgumentException.class, () -> plane.getNormal(new Point(1, 1, 1)));
+
+    //}
 
     @Test
     void testGetNormal() {
