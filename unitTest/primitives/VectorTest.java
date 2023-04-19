@@ -25,7 +25,7 @@ class VectorTest {
     }
 
     @Test
-    void scale() {
+    void testScale() {
         // ============ Equivalence Partitions Tests ==============
         // TC01: Test for scaling a vector
         Vector v4 = new Vector(2.0, 4.0, 6.0);
@@ -39,7 +39,7 @@ class VectorTest {
     }
 
     @Test
-    void dotProduct() {
+    void testDotProduct() {
         // ============ Equivalence Partitions Tests ==============
         // TC01: Test for dot product of two vectors
         assertEquals(-28, v1.dotProduct(v2), "ERROR: dotProduct() for two vectors is not correct");
@@ -50,7 +50,7 @@ class VectorTest {
     }
 
     @Test
-    void crossProduct() {
+    void testCrossProduct() {
         // ============ Equivalence Partitions Tests ==============
         // TC01: Test for cross product of two vectors
         Vector v4 = new Vector(-13.0,2.0,3.0);
@@ -63,7 +63,7 @@ class VectorTest {
         assertThrows(IllegalArgumentException.class, () -> v1.crossProduct(v1), "ERROR: crossProduct() for two vectors is not correct");
     }
     @Test
-    void lengthSquared() {
+    void testLengthSquared() {
         // ============ Equivalence Partitions Tests ==============
         // TC01: Test for lengthSquared of a vector
         assertEquals(14, v1.lengthSquared(), "ERROR: lengthSquared() for a vector is not correct");
@@ -74,7 +74,7 @@ class VectorTest {
     }
 
     @Test
-    void length() {
+    void testLength() {
         // ============ Equivalence Partitions Tests ==============
         // TC01: Test for length of a vector
         assertEquals(Math.sqrt(14), v1.length(), "ERROR: length() for a vector is not correct");
@@ -86,7 +86,7 @@ class VectorTest {
     }
 
     @Test
-    void normalize() {
+    void testNormalize() {
         // ============ Equivalence Partitions Tests ==============
         // TC01: Test for normalize of a vector
         Vector v4 = new Vector(1/Math.sqrt(14), 2/Math.sqrt(14), 3/Math.sqrt(14));

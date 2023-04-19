@@ -32,6 +32,7 @@ class PlaneTest {
             fail("Bad normal to plane");
         } catch (IllegalArgumentException e) {
 
+            assertThrows(IllegalArgumentException.class, () -> plane.getNormal(new Point(1, 1, 1)));
         }
 
     }

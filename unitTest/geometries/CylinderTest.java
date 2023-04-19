@@ -30,7 +30,7 @@ class CylinderTest {
         assertThrows(IllegalArgumentException.class, () -> cylinder.getNormal(new Point(0, 0, 0)),"inside the cylinder");
     }
     @Test
-    void getNormal() {
+    void testGetNormal() {
         testGetNormalOnBottom();
         testGetNormalOnTop();
         testGetNormalOnSide();
