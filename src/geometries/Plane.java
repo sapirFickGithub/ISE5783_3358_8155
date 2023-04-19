@@ -1,5 +1,8 @@
 package geometries;
 import primitives.*;
+
+import static primitives.Util.isZero;
+
 public class Plane implements Geometry{
     Point q0;
     Vector normal;
@@ -17,13 +20,15 @@ public class Plane implements Geometry{
         return q0;
     }
 
-    public Vector getNormal() {
-        return normal;
-    }
 
     @Override
-    public Vector getNormal(Point point) {
-        return null;
-    }
 
+    public Vector getNormal(Point point) {
+        //if the point is not on the plane
+        if (!isZero(point.subtract(q0).dotProduct(normal))) {
+            throw new IllegalArgumentException("The point is not on the plane");
+        }
+        //return normal
+        return normal;
+    }
 }

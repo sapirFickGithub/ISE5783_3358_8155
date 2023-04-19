@@ -6,6 +6,12 @@ public class Triangle extends Polygon {
     }
     @Override
     public Vector getNormal(Point point) {
-        return null;
+        Vector v1 = vertices.get(1).subtract(vertices.get(0));
+        Vector v2 = vertices.get(2).subtract(vertices.get(0));
+
+        // Calculate the cross product of these vectors to get the normal vector
+        Vector normal = v1.crossProduct(v2);
+        // Normalize the normal vector and return it
+        return normal.normalize();
     }
 }
