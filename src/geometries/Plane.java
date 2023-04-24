@@ -1,73 +1,101 @@
 package geometries;
-import primitives.*;
+
+import primitives.Point;
+import primitives.Ray;
+import primitives.Vector;
 
 import java.util.List;
 
 import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
-public class Plane implements Geometry{
-    Point q0;
-    Vector normal;
+/**
+ * Plane class representing a two-dimensional plane in 3D Cartesian coordinate.
+ */
+public class Plane implements Geometry {
+    final Point _q0;
+    final Vector _normal;
 
-    public Plane(Point q0, Vector normal) {
-        this.q0 = q0;
-        this.normal = normal;
+    /**
+     * Constructor to initialize plane
+     * @param q0 point in the plane
+     * @param vector vector that orthogonal to the plain
+     */
+    public Plane(Point q0, Vector vector) {
+        _q0 = q0;
+        _normal = vector.normalize();
     }
-    public Plane(Point q0, Point q1, Point q2) {
-        this.q0 = q0;
-        this.normal = q1.subtract(q0).crossProduct(q2.subtract(q0)).normalize();
+
+    /**
+     * Constructor to initialize plane
+     * @param p1 one point in the plane
+     * @param p2 second point in the plane
+     * @param p3 third point in the plane
+     */
+    public Plane(Point p1, Point p2, Point p3) {
+        _q0 = p1;
+
+        Vector U = p2.subtract(p1);
+        Vector V = p3.subtract(p1);
+
+        Vector N = U.crossProduct(V);
+
+        _normal = N.normalize();
     }
 
     public Point getQ0() {
-        return q0;
+        return _q0;
     }
 
+    /**
+     * @return Normal vector of the plane
+     */
+    public Vector getNormal() {
+        return _normal;
+    }
+
+    /**
+     * Return the normal of the plane on a specific point
+     * @param point Point on the surface of the geometry shape
+     * @return Normal on the receiving point
+     */
+    @Override
+    public Vector getNormal(Point point) {
+        return  _normal;
+    }
 
     @Override
+    public List<Point> findIntersections(Ray ray) {
+        Point p0=ray.getP0();
+        Vector v= ray.getDir();
+        Vector n= _normal;
 
-    public Vector getNormal(Point point) {
-        //if the point is not on the plane
-        if (isZero(point.subtract(q0).dotProduct(normal))) {
-            throw new IllegalArgumentException("The point is not on the plane");
-        }
-        //return normal
-        return normal;
-    }
-
-    //@Override
-    List<Point> findIntsersections(Ray ray){
-        Point P0= ray.getP0(); // according to the illustration P0 is the same point of the ray's P0 (that's why the definition))
-        Vector v = ray.getDir(); // according to the illustration v is the same vector of the ray's vector (that's why the definition))
-
-        if(q0.equals(P0)){ // if the ray starting from the plane it doesn't cut the plane at all
-            return null; // so return null
-        }
-
-        Vector n = normal; // the normal to the plane
-
-        double nv = n.dotProduct(v); // the formula's denominator of "t" (t =(n*(Q-P0))/nv)
-
-        // ray is lying on the plane axis
-        if (isZero(nv)){ // can't divide by zero (nv is the denominator)
+        if(p0.equals(_q0)) {
             return null;
         }
 
-        Vector Q0_P0 = q0.subtract(P0);
-        double nP0Q0= alignZero(n.dotProduct(Q0_P0));
-
-        // t should be bigger than 0
+        double nv= n.dotProduct(v);
+        if(isZero(nv)){
+            return null;
+        }
+        Vector p0Q0;
+        try {
+            p0Q0=_q0.subtract(p0);
+        }
+        catch (IllegalArgumentException e){
+            return  null;
+        }
+        double nP0Q0=n.dotProduct(p0Q0);
+        //t should be greater than 0.
         if(isZero(nP0Q0)){
             return null;
         }
-
-        double t =alignZero(nP0Q0 / nv);
-
-        // t should be bigger than 0
-        if(t<=0){
+        double t=alignZero(nP0Q0/nv);
+        //t should be greater than 0.
+        if(t<0){
             return null;
         }
-
-        return List.of(ray.getP0());
+        return List.of(ray.getPoint(t));
     }
+
 }

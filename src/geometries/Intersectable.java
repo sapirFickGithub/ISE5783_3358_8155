@@ -1,7 +1,18 @@
 package geometries;
-import primitives.*;
-import java. util. List;
 
+import primitives.Point;
+import primitives.Ray;
+
+import java.util.List;
+
+/**
+ * Interface for finding intersections points.
+ */
 public interface Intersectable {
-    List<Point> findIntsersections(Ray ray);
+    /**
+     *
+     * @param ray {@link Ray} pointing toward the object
+     * @return List of intersection  {@link Point}s
+     */
+    List<Point> findIntersections(Ray ray);
 }

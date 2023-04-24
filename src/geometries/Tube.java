@@ -1,42 +1,50 @@
 package geometries;
-import primitives.*;
-public class Tube extends RadialGeometry{
-    private Ray axisRay;
 
+import primitives.Point;
+import primitives.Ray;
+import primitives.Vector;
+
+import java.util.List;
+
+public class Tube implements Geometry{
+    protected Ray _axisRay;
+    protected double _radius;
 
     public Tube(Ray axisRay, double radius) {
-        this.axisRay = axisRay;
-        this.radius = radius;
-    }
-
-    public Ray getAxisRay() {
-        return axisRay;
-    }
-
-    public double getRadius() {
-        return radius;
+        _axisRay = axisRay;
+        _radius = radius;
     }
 
     @Override
-    public Vector getNormal(Point point) {
+    public String toString() {
+        return "Tube{" +
+                "_axisRay=" + _axisRay +
+                ", _radius=" + _radius +
+                '}';
+    }
 
-        System.out.println("point: " + point);
-        System.out.println("axisRay.getP0(): " + axisRay.getP0());
-        System.out.println("axisRay.getDir(): " + axisRay.getDir());
-        if (point.equals(axisRay.getP0())) {
-            throw new IllegalArgumentException("point cannot be equal to axisRay.getP0()");
-        }
-        double t = point.subtract(axisRay.getP0()).dotProduct(axisRay.getDir());
-        System.out.println("t: " + t);
-        if (t == 0) {
-            //The point is against axe start point
-            //return the vector from the point to the start of the ray
-            return point.subtract(axisRay.getP0()).normalize();
-        }
-        Point o = axisRay.getP0().add(axisRay.getDir().scale(t));
-        //print the point and the projection
-        System.out.println("point: " + point);
-        System.out.println("projection: " + o);
-        return point.subtract(o).normalize();
+
+    @Override
+    public Vector getNormal(Point point) {
+        Vector centeredVectorDirection = _axisRay.getDir();
+        Point p0 = _axisRay.getP0();
+
+        //If the projection equals to zero.
+        double projection = centeredVectorDirection.dotProduct(point.subtract(p0));
+        if (projection == 0) throw new IllegalArgumentException("The projection not allowed to be 0");
+
+        //Calculate the point on the centered ray of the tube to calculate the normal with it.
+        Point center = p0.add(centeredVectorDirection.scale(projection));
+
+        //Calculate the normal
+        Vector v = point.subtract(center);
+
+        //Return the normalized normal
+        return v.normalize();
+    }
+
+    @Override
+    public List<Point> findIntersections(Ray ray) {
+        return null;
     }
 }
