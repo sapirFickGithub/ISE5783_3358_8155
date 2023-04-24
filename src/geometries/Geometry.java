@@ -1,6 +1,12 @@
 package geometries;
-import primitives.*;
 
-public interface Geometry{ //extends Intersectable{
-    public Vector getNormal(Point point);
+import primitives.Point;
+import primitives.Vector;
+
+/**
+ * Geometry interface
+ */
+
+public interface Geometry extends Intersectable {
+    Vector getNormal(Point point);
 }
