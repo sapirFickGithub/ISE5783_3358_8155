@@ -7,9 +7,9 @@ import primitives.Vector;
 import java.util.List;
 import java.util.Objects;
 
-public class Sphere implements Geometry{
+public class Sphere  extends RadialGeometry{
     private final Point _center;
-    private final double _radius;
+
 
     public Sphere(Point center, double radius) {
         _center = center;

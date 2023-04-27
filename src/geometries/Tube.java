@@ -6,9 +6,9 @@ import primitives.Vector;
 
 import java.util.List;
 
-public class Tube implements Geometry{
+public class Tube extends RadialGeometry{
     protected Ray _axisRay;
-    protected double _radius;
+
 
     public Tube(Ray axisRay, double radius) {
         _axisRay = axisRay;
