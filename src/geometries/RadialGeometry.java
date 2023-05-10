@@ -6,5 +6,5 @@ package geometries;
  * @author Dan
  */
 public abstract class RadialGeometry implements Geometry{
-	protected double _radius;
+	protected double radius;
 }

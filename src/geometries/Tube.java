@@ -5,29 +5,33 @@ import primitives.Ray;
 import primitives.Vector;
 
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import primitives.*;
 
 public class Tube extends RadialGeometry{
-    protected Ray _axisRay;
+    protected Ray axisRay;
 
 
     public Tube(Ray axisRay, double radius) {
-        _axisRay = axisRay;
-        _radius = radius;
+        this.axisRay = axisRay;
+        this.radius = radius;
     }
 
     @Override
     public String toString() {
         return "Tube{" +
-                "_axisRay=" + _axisRay +
-                ", _radius=" + _radius +
+                "_axisRay=" + axisRay +
+                ", _radius=" + radius +
                 '}';
     }
 
 
     @Override
     public Vector getNormal(Point point) {
-        Vector centeredVectorDirection = _axisRay.getDir();
-        Point p0 = _axisRay.getP0();
+        Vector centeredVectorDirection = axisRay.getDir();
+        Point p0 = axisRay.getP0();
 
         //If the projection equals to zero.
         double projection = centeredVectorDirection.dotProduct(point.subtract(p0));
@@ -44,7 +48,8 @@ public class Tube extends RadialGeometry{
     }
 
     @Override
-    public List<Point> findIntersections(Ray ray) {
+    public List<Point> findIntsersections(Ray ray) {
         return null;
     }
 }
+

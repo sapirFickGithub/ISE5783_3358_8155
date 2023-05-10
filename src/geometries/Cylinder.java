@@ -26,8 +26,8 @@ public class Cylinder extends Tube implements Geometry{
     public String toString() {
         return "Cylinder{" +
                 "_height=" + _height +
-                ", _axisRay=" + _axisRay +
-                ", _radius=" + _radius +
+                ", _axisRay=" + axisRay +
+                ", _radius=" + radius +
                 '}';
     }
 
@@ -35,10 +35,10 @@ public class Cylinder extends Tube implements Geometry{
     public Vector getNormal(Point point) {
 
         //Define the center of cylinder's sides.
-        Vector cylinderCenterVector = _axisRay.getDir();
+        Vector cylinderCenterVector = axisRay.getDir();
 
-        Point centerOfOneSide = _axisRay.getP0();
-        Point centerOfSecondSide = _axisRay.getP0().add(_axisRay.getDir().scale(_height));
+        Point centerOfOneSide = axisRay.getP0();
+        Point centerOfSecondSide = axisRay.getP0().add(axisRay.getDir().scale(_height));
 
         //The normal at a base will be simply equal to central ray's
         //direction vector 𝑣 or opposite to it (−𝑣) so we check it

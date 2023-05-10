@@ -13,7 +13,7 @@ public class Sphere  extends RadialGeometry{
 
     public Sphere(Point center, double radius) {
         _center = center;
-        _radius = radius;
+        this.radius = radius;
     }
 
     public Point getCenter() {
@@ -21,14 +21,14 @@ public class Sphere  extends RadialGeometry{
     }
 
     public double getRadius() {
-        return _radius;
+        return radius;
     }
 
     @Override
     public String toString() {
         return "Sphere{" +
                 "_center=" + _center +
-                ", _radius=" + _radius +
+                ", _radius=" + radius +
                 '}';
     }
 
@@ -37,12 +37,12 @@ public class Sphere  extends RadialGeometry{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Sphere sphere = (Sphere) o;
-        return Double.compare(sphere._radius, _radius) == 0 && _center.equals(sphere._center);
+        return Double.compare(sphere.radius, radius) == 0 && _center.equals(sphere._center);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(_center, _radius);
+        return Objects.hash(_center, radius);
     }
 
     /**
@@ -59,40 +59,40 @@ public class Sphere  extends RadialGeometry{
     @Override
     public List<Point> findIntersections(Ray ray) {
         Point p0 = ray.getP0();
-        Point O = _center;
-        Vector V = ray.getDir();
+        Point center = _center;
+        Vector vector = ray.getDir();
 
         // if p0 on center, calculate with line parametric representation
         // the direction vector normalized.
-        if (O.equals(p0)) {
-            Point newPoint = p0.add(ray.getDir().scale(_radius));
+        if (center.equals(p0)) {
+            Point newPoint = p0.add(ray.getDir().scale(radius));
             return List.of(newPoint);
         }
 
-        Vector U = O.subtract(p0);
-        double tm = V.dotProduct(U);
-        double d = Math.sqrt(U.lengthSquared() - tm * tm);
-        if (d >= _radius) {
+        Vector vector1 = center.subtract(p0);
+        double dotProduct = vector.dotProduct(vector1);
+        double d = Math.sqrt(vector1.lengthSquared() - dotProduct * dotProduct);
+        if (d >= radius) {
             return null;
         }
 
-        double th = Math.sqrt(_radius * _radius - d * d);
-        double t1 = tm - th;
-        double t2 = tm + th;
+        double sqrt = Math.sqrt(radius * radius - d * d);
+        double hefresh = dotProduct - sqrt;
+        double mana = dotProduct + sqrt;
 
-        if (t1 > 0 && t2 > 0) {
-            Point p1 = ray.getPoint(t1);
-            Point p2 = ray.getPoint(t2);
+        if (hefresh > 0 && mana > 0) {
+            Point p1 = ray.getPoint(hefresh);
+            Point p2 = ray.getPoint(mana);
             return List.of(p1, p2);
         }
 
-        if (t1 > 0) {
-            Point p1 = ray.getPoint(t1);
+        if (hefresh > 0) {
+            Point p1 = ray.getPoint(hefresh);
             return List.of(p1);
         }
 
-        if (t2 > 0) {
-            Point p2 = ray.getPoint(t2);
+        if (mana > 0) {
+            Point p2 = ray.getPoint(mana);
             return List.of(p2);
         }
 
