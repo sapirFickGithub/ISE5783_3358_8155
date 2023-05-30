@@ -1,5 +1,6 @@
 package primitives;
 
+import java.util.List;
 import java.util.Objects;
 
 import static primitives.Util.isZero;
@@ -61,5 +62,9 @@ public class Ray {
             throw new IllegalArgumentException("ZERO vector not allowed");
         }
         return _p0.add(_dir.scale(t));
+    }
+
+    public Point findClosestPoint(List<Point> pointsList){
+        return new Point(0,0,0);
     }
 }
