@@ -1,80 +1,149 @@
 package scene;
 
-import geometries.Geometries;
 import lighting.AmbientLight;
+import geometries.Geometries;
+import lighting.*;
 import primitives.Color;
+import primitives.Point;
 
+import java.util.LinkedList;
+import java.util.List;
+
+
+/**
+ * Represents a scene with a name, background color, ambient light, geometries, and lights.
+ */
 public class Scene {
-    public String _name;                 //scene name
-    public Color _background;           //background color
-    public AmbientLight _ambientLight; //ambient light
-    public Geometries _geometries;    //composite for all geometric object
+    // Name of the scene
+    private final String name;
+
+    // Background color of the scene
+    private final Color background;
+    // Ambient light of the scene
+    private AmbientLight ambientLight;
+    // Geometries in the scene
+    private final Geometries geometries;
 
     /**
-     * Constructor using Builder Pattern
-     * @param builder the builder for the scene
+     * Constructor for Scene.
+     * @param builder The SceneBuilder object used to build the scene.
      */
-    public Scene(String name) {
-       this.SceneBuilder(name);
-    }
     public Scene(SceneBuilder builder) {
-        _name = builder._name;
-        _background = builder._background;
-        _ambientLight = builder._ambientLight;
-        _geometries = builder._geometries;
+        name = builder.name;
+        background = builder.background;
+        ambientLight = builder.ambientLight;
+        geometries = builder.geometries;
+
     }
 
     /**
-     * Inner class for scene builder
+     * Getter for the name of the scene.
+     * @return The name of the scene.
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Getter for the background color of the scene.
+     * @return The background color of the scene.
+     */
+    public Color getBackground() {
+        return background;
+    }
+
+    /**
+     * Getter for the ambient light of the scene.
+     * @return The ambient light of the scene.
+     */
+    public AmbientLight getAmbientLight() {
+        return ambientLight;
+    }
+
+    /**
+     * Setter for the ambient light of the scene.
+     * @param ambientLight The ambient light of the scene.
+     * @return This scene.
+     */
+    public Scene setAmbientLight(AmbientLight ambientLight) {
+        this.ambientLight = ambientLight;
+        return this;
+    }
+
+
+
+    /**
+     * Getter for the geometries in the scene.
+     * @return The geometries in the scene.
+     */
+    public Geometries getGeometries() {
+        return geometries;
+    }
+
+    /**
+     * Represents a scene builder used to build a scene.
      */
     public static class SceneBuilder {
+        // Name of the scene
+        private final String name;
+        // List of lights in the scene
 
-        private  String _name;
-        private Color _background = Color.BLACK;
-        private AmbientLight _ambientLight = new AmbientLight();
-        private Geometries _geometries=new Geometries();
+        private Color background = Color.BLACK;
+        // Ambient light of the scene
+        private AmbientLight ambientLight = new AmbientLight();
+        // Geometries in the scene
+        private Geometries geometries = new Geometries();
 
         /**
-         * Constructor for builder
-         * @param name mandatory name
+         * Constructor for SceneBuilder.
+         * @param name The name of the scene.
          */
         public SceneBuilder(String name) {
-            _name = name;
-
+            this.name = name;
         }
 
-        //Chaining methods
+        /**
+         * Setter for the background color of the scene.
+         * @param background The background color of the scene.
+         * @return This scene.
+         */
         public SceneBuilder setBackground(Color background) {
-            this._background = background;
+            this.background = background;
             return this;
         }
 
+        /**
+         * Setter for the ambient light of the scene.
+         * @param ambientLight The ambient light of the scene.
+         * @return This scene.
+         */
         public SceneBuilder setAmbientLight(AmbientLight ambientLight) {
-            _ambientLight = ambientLight;
+            this.ambientLight = ambientLight;
             return this;
         }
 
+        /**
+         * Setter for the geometries of the scene.
+         * @param geometries The geometries of the scene.
+         * @return This scene.
+         */
         public SceneBuilder setGeometries(Geometries geometries) {
-            _geometries = geometries;
+            this.geometries = geometries;
             return this;
         }
-        public Scene build(){
+
+        /**
+         * Builds the scene using the SceneBuilder.
+         * @return The scene.
+         */
+        public Scene build() {
             return new Scene(this);
         }
-    }
-    public String getName() {
-        return _name;
-    }
 
-    public Color getBackground() {
-        return _background;
-    }
+        /**
+         * Getter for the list of lights in the scene.
+         * @return The list of lights in the scene.
+         */
 
-    public AmbientLight getAmbientLight() {
-        return _ambientLight;
-    }
-
-    public Geometries getGeometries() {
-        return _geometries;
     }
 }
