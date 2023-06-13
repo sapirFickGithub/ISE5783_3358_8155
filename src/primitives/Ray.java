@@ -2,7 +2,7 @@ package primitives;
 
 import java.util.List;
 import java.util.Objects;
-
+import geometries.*;
 import static primitives.Util.isZero;
 
 /**
@@ -64,7 +64,24 @@ public class Ray {
         return _p0.add(_dir.scale(t));
     }
 
-    public Point findClosestPoint(List<Point> pointsList){
-        return new Point(0,0,0);
+    /**
+     * Return the closest point from all intersection points
+     * @param points list of intersections
+     * @return {@link Point}
+     */
+    public Point findClosestPoint(List<Point> points) {
+        return points == null || points.isEmpty() ? null
+                : findClosestGeoPoint(points.stream().map(p -> new GeoPoint(null, p)).toList())._point;
     }
+
+    /**
+     * Return the closest GeoPoint from all intersection GeoPoints
+     * @param List list of intersections
+     * @return {@link GeoPoint}
+     */
+    public Point findClosestPoint(List<Point> points) {
+        return points == null || points.isEmpty() ? null
+                : findClosestGeoPoint(points.stream().map(p -> new GeoPoint(null, p)).toList()).point;
+    }
+
 }

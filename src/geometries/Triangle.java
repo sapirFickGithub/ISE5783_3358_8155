@@ -22,7 +22,7 @@ public class Triangle extends Polygon implements Geometry{
                 "vertices=" + vertices.get(0) + ","+vertices.get(1) + ","+vertices.get(2)+
                 '}';
     }
-    @Override
+  /*  @Override
     public List<Point> findIntersections(Ray ray) {
 
         //Check if the ray intersect the plane.
@@ -46,6 +46,6 @@ public class Triangle extends Polygon implements Geometry{
             return  plane.findIntersections(ray);
         }
         return null;
-    }
+    }*/
 
 }

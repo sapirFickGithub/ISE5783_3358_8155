@@ -23,6 +23,10 @@ public class Scene {
     private AmbientLight ambientLight;
     // Geometries in the scene
     private final Geometries geometries;
+    /**
+     * The lights source in the scene (List of lights)
+     */
+    private final List<LightSource> lights=new LinkedList<>();
 
     /**
      * Constructor for Scene.
@@ -93,6 +97,10 @@ public class Scene {
         private AmbientLight ambientLight = new AmbientLight();
         // Geometries in the scene
         private Geometries geometries = new Geometries();
+        /**
+         * The lights source in the scene (List of lights)
+         */
+        private final List<LightSource> lights=new LinkedList<>();
 
         /**
          * Constructor for SceneBuilder.
@@ -107,6 +115,10 @@ public class Scene {
          * @param background The background color of the scene.
          * @return This scene.
          */
+        public SceneBuilder set_lights(List<LightSource> lights){
+            this.lights()=lights;
+            return this;
+        }
         public SceneBuilder setBackground(Color background) {
             this.background = background;
             return this;

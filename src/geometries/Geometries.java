@@ -24,7 +24,7 @@ public class Geometries implements Intersectable {
     public void add(Intersectable... intersectables){
         Collections.addAll(_intersectables,intersectables);
     }
-    @Override
+    /*@Override
     public List<Point> findIntersections(Ray ray) {
         LinkedList<Point> points=null;
         for(var geometry: _intersectables){
@@ -37,5 +37,5 @@ public class Geometries implements Intersectable {
             }
         }
         return points;
-    }
+    }*/
 }

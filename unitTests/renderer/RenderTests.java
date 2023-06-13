@@ -2,7 +2,6 @@ package renderer;
 
 import geometries.Sphere;
 import geometries.Triangle;
-import lighting.AmbientLight;
 import org.junit.jupiter.api.Test;
 import primitives.Color;
 import primitives.Double3;
