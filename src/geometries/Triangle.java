@@ -10,7 +10,7 @@ import java.util.List;
 //import static org.junit.jupiter.api.Assertions.*;
 import static primitives.Util.alignZero;
 
-public class Triangle extends Polygon implements Geometry{
+public class Triangle extends Polygon{
 
     public Triangle(Point p1, Point p2, Point p3) {
         super(p1,p2,p3);

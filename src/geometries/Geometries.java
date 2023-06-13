@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Composite class for all geometries object implementing {@link Intersectable}
  */
-public class Geometries implements Intersectable {
+public class Geometries extends Intersectable {
     List<Intersectable> _intersectables;
 
     public Geometries() {
