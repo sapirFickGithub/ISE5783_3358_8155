@@ -8,6 +8,7 @@ import primitives.Double3;
 import primitives.Point;
 import primitives.Vector;
 import scene.Scene;
+import lighting.*;
 
 import static java.awt.Color.*;
 

@@ -33,6 +33,11 @@ public class Double3 {
 		this._d3 = d3;
 	}
 
+	public Double3(double value) {
+		this._d1 = value;
+		this._d2 = value;
+		this._d3 = value;
+	}
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -84,7 +89,7 @@ public class Double3 {
 	 * @param rhs right handle side operand for scaling
 	 * @return result of scale
 	 */
-	Double3 scale(double rhs) {
+	 public Double3 scale(double rhs) {
 		return new Double3(_d1 * rhs, _d2 * rhs, _d3 * rhs);
 	}
 

@@ -1,9 +1,8 @@
 package geometries;
 
-import primitives.Color;
-import primitives.Material;
-import primitives.Point;
-import primitives.Vector;
+import primitives.*;
+
+import java.util.List;
 
 /**
  * Geometry class
@@ -59,4 +58,5 @@ public abstract class Geometry extends Intersectable {
 
     public abstract Vector getNormal(Point point);
 
+    public abstract List<Point> findIntersections(Ray ray);
 }

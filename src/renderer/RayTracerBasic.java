@@ -2,6 +2,7 @@ package renderer;
 
 import primitives.*;
 import scene.Scene;
+import lighting.*;
 import geometries.Intersectable.GeoPoint;
 
 import java.util.List;
@@ -41,24 +42,24 @@ public class RayTracerBasic extends RayTracerBase{
      */
     private Color calcColor(GeoPoint point, Ray ray) {
         return _scene.getAmbientLight().getIntensity()
-                .add(point._geometry.getEmission())
+                .add(point.geometry.getEmission())
                 .add(calcLocalEffects(point, ray));
     }
     private Color calcLocalEffects(GeoPoint intersection, Ray ray) {
         Vector v = ray.getDir();
-        Vector n = intersection._geometry.getNormal(intersection._point);
+        Vector n = intersection.geometry.getNormal(intersection.point);
         double nv = alignZero(n.dotProduct(v));
         if (nv == 0) return Color.BLACK;
         int nShininess = intersection.geometry.getMaterial()._nShininess;
-        Double3 kd = intersection._geometry.getMaterial()._Kd;
-        Double3 ks = intersection._geometry.getMaterial()._Ks;
+        Double3 kd = intersection.geometry.getMaterial()._Kd;
+        Double3 ks = intersection.geometry.getMaterial()._Ks;
 
         Color color = Color.BLACK;
         for (LightSource lightSource : _scene.getLights()) {
-            Vector l = lightSource.getL(intersection._point);
+            Vector l = lightSource.getL(intersection.point);
             double nl = alignZero(n.dotProduct(l));
             if (nl * nv > 0) { // sign(nl) == sing(nv)
-                Color lightIntensity = lightSource.getIntensity(intersection._point);
+                Color lightIntensity = lightSource.getIntensity(intersection.point);
                 color = color.add(calcDiffusive(kd, l, n, lightIntensity),
                         calcSpecular(ks, l, n, v, nShininess, lightIntensity));
             }
