@@ -24,11 +24,12 @@ public class Geometries extends Intersectable {
     public void add(Intersectable... intersectables){
         Collections.addAll(_intersectables,intersectables);
     }
-    /*@Override
-    public List<Point> findIntersections(Ray ray) {
-        LinkedList<Point> points=null;
+
+    @Override
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+        LinkedList<GeoPoint> points=null;
         for(var geometry: _intersectables){
-            var geometryList=geometry.findIntersections(ray);
+            var geometryList=geometry.findGeoIntersections(ray);
             if(geometryList!=null){
                 if(points==null){
                     points=new LinkedList<>();
@@ -37,5 +38,5 @@ public class Geometries extends Intersectable {
             }
         }
         return points;
-    }*/
+    }
 }

@@ -7,19 +7,38 @@ import primitives.Vector;
 import java.util.List;
 import java.util.Objects;
 
-public class Sphere  extends RadialGeometry{
+/**
+ * Represents a sphere in a three-dimensional space.
+ */
+public class Sphere extends Geometry {
     private final Point _center;
+    private final double _radius;
 
-
+    /**
+     * Constructs a new Sphere object with the given center and radius.
+     *
+     * @param center The center point of the sphere.
+     * @param radius The radius of the sphere.
+     */
     public Sphere(Point center, double radius) {
         _center = center;
-        this._radius = radius;
+        _radius = radius;
     }
 
+    /**
+     * Returns the center point of the sphere.
+     *
+     * @return The center point.
+     */
     public Point getCenter() {
         return _center;
     }
 
+    /**
+     * Returns the radius of the sphere.
+     *
+     * @return The radius.
+     */
     public double getRadius() {
         return _radius;
     }
@@ -46,56 +65,56 @@ public class Sphere  extends RadialGeometry{
     }
 
     /**
-     * Return the normal to the sphere in the receiving point
-     * @param point Point on the sphere
-     * @return Normal to the sphere in the receiving point (Vector)
+     * Computes and returns the normal vector to the sphere at the specified point.
+     *
+     * @param point The point on the sphere.
+     * @return The normal vector at the specified point.
      */
     @Override
     public Vector getNormal(Point point) {
         Vector v = point.subtract(_center);
-        return v.normalize(); //Return normalize normal vector.
+        return v.normalize(); // Return normalized normal vector.
     }
 
-  /*  @Override
-    public List<Point> findIntersections(Ray ray) {
+    @Override
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
         Point p0 = ray.getP0();
-        Point center = _center;
-        Vector vector = ray.getDir();
+        Point O = _center;
+        Vector V = ray.getDir();
 
-        // if p0 on center, calculate with line parametric representation
-        // the direction vector normalized.
-        if (center.equals(p0)) {
+        // If p0 is on the center, calculate with line parametric representation
+        // and the direction vector normalized.
+        if (O.equals(p0)) {
             Point newPoint = p0.add(ray.getDir().scale(_radius));
-            return List.of(newPoint);
+            return List.of(new GeoPoint(this, newPoint));
         }
 
-        Vector vector1 = center.subtract(p0);
-        double dotProduct = vector.dotProduct(vector1);
-        double d = Math.sqrt(vector1.lengthSquared() - dotProduct * dotProduct);
+        Vector U = O.subtract(p0);
+        double tm = V.dotProduct(U);
+        double d = Math.sqrt(U.lengthSquared() - tm * tm);
         if (d >= _radius) {
             return null;
         }
 
-        double sqrt = Math.sqrt(_radius * _radius - d * d);
-        double hefresh = dotProduct - sqrt;
-        double mana = dotProduct + sqrt;
+        double th = Math.sqrt(_radius * _radius - d * d);
+        double t1 = tm - th;
+        double t2 = tm + th;
 
-        if (hefresh > 0 && mana > 0) {
-            Point p1 = ray.getPoint(hefresh);
-            Point p2 = ray.getPoint(mana);
-            return List.of(p1, p2);
+        if (t1 > 0 && t2 > 0) {
+            Point p1 = ray.getPoint(t1);
+            Point p2 = ray.getPoint(t2);
+            return List.of(new GeoPoint(this, p1), new GeoPoint(this, p2));
         }
 
-        if (hefresh > 0) {
-            Point p1 = ray.getPoint(hefresh);
-            return List.of(p1);
+        if (t1 > 0) {
+            Point p1 = ray.getPoint(t1);
+            return List.of(new GeoPoint(this, p1));
         }
 
-        if (mana > 0) {
-            Point p2 = ray.getPoint(mana);
-            return List.of(p2);
+        if (t2 > 0) {
+            Point p2 = ray.getPoint(t2);
+            return List.of(new GeoPoint(this, p2));
         }
-
         return null;
-    }*/
+    }
 }
