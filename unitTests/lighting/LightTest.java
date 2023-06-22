@@ -2,7 +2,6 @@ package lighting;
 
 import org.junit.jupiter.api.Test;
 
-import lighting.*;
 import geometries.*;
 import primitives.*;
 import renderer.*;
@@ -54,8 +53,8 @@ public class LightTest {
         ImageWriter imageWriter = new ImageWriter("lightSphereDirectional", 500, 500);
         camera1.setImageWriter(imageWriter) //
                 .setRayTracer(new RayTracerBasic(scene1)) //
-                .renderImage() //
-                .writeToImage(); //
+                .renderImage()//
+                .writeToImage();//
     }
 
     /**
@@ -64,17 +63,18 @@ public class LightTest {
     @Test
     public void spherePoint() {
         scene1.getGeometries().add(sphere);
-        scene1.getLights().add(new PointLight(spCL, spPL).setKl(0.001).setKq(0.0002));
+        scene1.getLights().add(new PointLight(spCL, spPL).setradius(10).setKl(0.001).setKq(0.0002));
 
         ImageWriter imageWriter = new ImageWriter("lightSpherePoint", 500, 500);
         camera1.setImageWriter(imageWriter) //
                 .setRayTracer(new RayTracerBasic(scene1)) //
+                .setSuperSampling(true)
                 .renderImage() //
                 .writeToImage(); //
     }
 
     /**
-     * Produce a picture of a sphere lighted by a spot light
+     * Produce a picture of a sphere lighted by a spotlight
      */
     @Test
     public void sphereSpot() {
@@ -84,6 +84,7 @@ public class LightTest {
         ImageWriter imageWriter = new ImageWriter("lightSphereSpot", 500, 500);
         camera1.setImageWriter(imageWriter) //
                 .setRayTracer(new RayTracerBasic(scene1)) //
+                .setSuperSampling(true)
                 .renderImage() //
                 .writeToImage(); //
     }
@@ -99,6 +100,7 @@ public class LightTest {
         ImageWriter imageWriter = new ImageWriter("lightTrianglesDirectional", 500, 500);
         camera2.setImageWriter(imageWriter) //
                 .setRayTracer(new RayTracerBasic(scene2)) //
+                .setSuperSampling(true)
                 .renderImage() //
                 .writeToImage(); //
     }
@@ -114,6 +116,7 @@ public class LightTest {
         ImageWriter imageWriter = new ImageWriter("lightTrianglesPoint", 500, 500);
         camera2.setImageWriter(imageWriter) //
                 .setRayTracer(new RayTracerBasic(scene2)) //
+                .setSuperSampling(true)
                 .renderImage() //
                 .writeToImage(); //
     }
@@ -129,6 +132,7 @@ public class LightTest {
         ImageWriter imageWriter = new ImageWriter("lightTrianglesSpot", 500, 500);
         camera2.setImageWriter(imageWriter) //
                 .setRayTracer(new RayTracerBasic(scene2)) //
+                .setSuperSampling(true)
                 .renderImage() //
                 .writeToImage(); //
     }
@@ -145,6 +149,7 @@ public class LightTest {
         ImageWriter imageWriter = new ImageWriter("lightSphereSpotSharp", 500, 500);
         camera1.setImageWriter(imageWriter) //
                 .setRayTracer(new RayTracerBasic(scene1)) //
+                .setSuperSampling(true)
                 .renderImage() //
                 .writeToImage(); //
     }
@@ -198,11 +203,11 @@ public class LightTest {
 
         scene2.getLights()
                 .add(new SpotLight(new Color(350, 350, 0), new Point(10, -10, -130), new Vector(-2, -2, -1))
-                .setKl(0.0001)
-                .setKq(0.000005));
+                        .setKl(0.0001)
+                        .setKq(0.000005));
         scene2.getLights()
                 .add(new PointLight(new Color(0, 300, 350), new Point(10, -10, -130))
-                .setKl(0.0005).setKq(0.0002));
+                        .setKl(0.0005).setKq(0.0002));
         scene2.getLights()
                 .add(new DirectionalLight(new Color(120, 5, 5), new Vector(0, 0, -1)));
 

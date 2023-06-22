@@ -4,7 +4,6 @@ import primitives.Color;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
-import scene.Scene;
 
 import java.util.MissingResourceException;
 
@@ -53,6 +52,7 @@ public class Camera {
 
     /**
      * Get p0
+     *
      * @return point of the camera position
      */
     public Point getP0() {
@@ -61,6 +61,7 @@ public class Camera {
 
     /**
      * Get vector Vto
+     *
      * @return camera's towards direction
      */
     public Vector getvTo() {
@@ -69,6 +70,7 @@ public class Camera {
 
     /**
      * Get vector Vup
+     *
      * @return camera's up direction
      */
     public Vector getvUp() {
@@ -77,6 +79,7 @@ public class Camera {
 
     /**
      * Get vector Vright
+     *
      * @return camera's right direction
      */
     public Vector getvRight() {
@@ -85,6 +88,7 @@ public class Camera {
 
     /**
      * Get distance between the view plane and camera
+     *
      * @return distance of the view plane from the camera
      */
     public double getDistance() {
@@ -93,6 +97,7 @@ public class Camera {
 
     /**
      * Get width of the view plane
+     *
      * @return width of the view plane
      */
     public double getWidth() {
@@ -101,6 +106,7 @@ public class Camera {
 
     /**
      * Get height of the view plane
+     *
      * @return height of the view plane
      */
     public double getHeight() {
@@ -111,6 +117,7 @@ public class Camera {
 
     /**
      * Set view plane distance
+     *
      * @param distance distance between camara and view plane
      * @return camera instance
      */
@@ -121,7 +128,8 @@ public class Camera {
 
     /**
      * Set view plane size
-     * @param width width of the view plane
+     *
+     * @param width  width of the view plane
      * @param height height of the view plane
      * @return camera instance
      */
@@ -146,8 +154,8 @@ public class Camera {
         Point Pc = _p0.add(_vTo.scale(_distance));
 
         //Ratio (pixel height and width).
-        double Ry = (double) _height / Ny;
-        double Rx = (double) _width / Nx;
+        double Ry = (double) _height/Ny;
+        double Rx = (double) _width/Nx;
 
         Point Pij = Pc;
         double Yi = -(i - (Ny - 1) / 2d) * Ry;
@@ -167,47 +175,52 @@ public class Camera {
 
     public void writeToImage() {
         if (_imageWriter == null)
-            throw new MissingResourceException("Enter a image writer", ImageWriter.class.getName(), "");
+            throw new MissingResourceException("Missing imageWriter", ImageWriter.class.getName(), "");
         _imageWriter.writeToImage();
     }
 
-    public void printGrid(int gap, Color intervalColor) {
+    public void printGrid(int interval, Color color) {
         if (_imageWriter == null)
-            throw new MissingResourceException("Enter a image writer", ImageWriter.class.getName(), "");
-        _imageWriter.printGrid(gap,intervalColor);
+            throw new MissingResourceException("Missing imageWriter", ImageWriter.class.getName(), "");
+        _imageWriter.printGrid(interval, color);
     }
 
+    public Camera renderImage() {
+        try {
+            if (_imageWriter == null)
+                throw new MissingResourceException("Missing imageWriter", ImageWriter.class.getName(), "");
+            if (_rayTracerBase == null)
+                throw new MissingResourceException("Missing rayTracerBase", RayTracerBase.class.getName(), "");
 
-    public void renderImage() {
-        if (_imageWriter == null)
-            throw new UnsupportedOperationException("Missing imageWriter");
-        if (_rayTracerBase == null)
-            throw new UnsupportedOperationException("Missing rayTracerBase");
+            int nX = _imageWriter.getNx();
+            int nY = _imageWriter.getNy();
 
-        for (int i = 0; i < _imageWriter.getNy(); i++) {
-            for (int j = 0; j < _imageWriter.getNy(); j++) {
-                Color color = castRay(j,i);
-                _imageWriter.writePixel(j, i, color);
+            for (int i = 0; i < nY; i++) {
+                for (int j = 0; j < nX; j++) {
+                    Color pixelColor = castRay(nX, nY, j, i);
+                    _imageWriter.writePixel(j, i, pixelColor);
+                }
             }
+            return this;
+        }
+        catch (MissingResourceException e) {
+            throw new UnsupportedOperationException("No implementation" + e.getClassName());
         }
     }
 
-    private Color castRay(int j,int i){
-        Ray ray = constructRay(
-                _imageWriter.getNx(),
-                _imageWriter.getNy(),
-                j,
-                i);
+
+    private Color castRay(int nX, int nY, int j, int i) {
+        Ray ray = constructRay(nX, nY, j, i);
         return _rayTracerBase.traceRay(ray);
     }
 
     public Camera setImageWriter(ImageWriter imageWriter) {
-        _imageWriter=imageWriter;
+        _imageWriter = imageWriter;
         return this;
     }
 
     public Camera setRayTracer(RayTracerBase rayTracerBase) {
-        _rayTracerBase=rayTracerBase;
+        _rayTracerBase = rayTracerBase;
         return this;
     }
 }

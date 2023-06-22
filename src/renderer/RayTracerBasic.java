@@ -1,38 +1,40 @@
 package renderer;
 
+import geometries.Intersectable.GeoPoint;
+import lighting.LightSource;
 import primitives.*;
 import scene.Scene;
-import lighting.*;
-import geometries.Intersectable.GeoPoint;
 
 import java.util.List;
 
 import static primitives.Util.alignZero;
 
-public class RayTracerBasic extends RayTracerBase{
+public class RayTracerBasic extends RayTracerBase {
+    private static final double DELTA = 0.1;
 
     public RayTracerBasic(Scene scene) {
-
         super(scene);
     }
 
     /**
      * Get color of the intersection of the ray with the scene
+     *
      * @param ray Ray to trace
      * @return Color of intersection
      */
     @Override
     public Color traceRay(Ray ray) {
 
-        List<Point> intersections  = _scene.getGeometries().findIntersections(ray);
+        List<GeoPoint> intersections = _scene.getGeometries().findGeoIntersections(ray);
 
         if (intersections == null)
             return _scene.getBackground();
 
-        Point closestPoint = ray.findClosestPoint(intersections);
+        GeoPoint closestPoint = ray.findClosestGeoPoint(intersections);
 
-        return calcColor(closestPoint);
+        return calcColor(closestPoint, ray);
     }
+
 
     /**
      * Get the color of an intersection point
@@ -45,6 +47,8 @@ public class RayTracerBasic extends RayTracerBase{
                 .add(point.geometry.getEmission())
                 .add(calcLocalEffects(point, ray));
     }
+
+
     private Color calcLocalEffects(GeoPoint intersection, Ray ray) {
         Vector v = ray.getDir();
         Vector n = intersection.geometry.getNormal(intersection.point);

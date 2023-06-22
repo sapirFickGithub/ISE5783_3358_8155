@@ -26,7 +26,7 @@ public class RenderTests {
     @Test
     public void basicRenderTwoColorTest() {
         Scene.SceneBuilder sceneBuilder = new Scene.SceneBuilder("Test scene")
-                .setAmbientLight(new AmbientLight(new Color(255, 191, 191), //
+                .setLight(new AmbientLight(new Color(255, 191, 191), //
                         new Double3(1, 1, 1))) //
                 .setBackground(new Color(75, 127, 90));
         Scene scene = new Scene(sceneBuilder);
@@ -58,7 +58,7 @@ public class RenderTests {
     public void basicRenderMultiColorTest() {
 
         Scene.SceneBuilder sceneBuilder = new Scene.SceneBuilder("Test scene")
-                .setAmbientLight(new AmbientLight(new Color(WHITE), //
+                .setLight(new AmbientLight(new Color(WHITE), //
                         new Double3(0.2))) //
                 .setBackground(new Color(75, 127, 90));
         Scene scene = new Scene(sceneBuilder);
