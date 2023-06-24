@@ -24,7 +24,7 @@ public class Scene {
      * Constructor using Builder Pattern
      * @param builder the builder for the scene
      */
-    private Scene(SceneBuilder builder) {
+    public Scene(SceneBuilder builder) {
         _name = builder._name;
         _background = builder._background;
         _ambientLight = builder._ambientLight;

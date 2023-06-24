@@ -64,7 +64,7 @@ public class Material {
      * @param nShininess shininess factor of the material (int)
      * @return this (Material)
      */
-    public Material setnShininess(int nShininess) {
+    public Material setShininess(int nShininess) {
         _nShininess = nShininess;
         return this;
     }

@@ -9,6 +9,8 @@ public class SpotLight extends PointLight{
 
     protected Vector _dir;
 
+    private double _concentration = 1d;
+
     public SpotLight(Color c, Point position,Vector direction) {
         super(c, position);
         _dir = direction.normalize();
@@ -27,5 +29,15 @@ public class SpotLight extends PointLight{
 
 
         return (pointLightIntensity.scale(factor));
+    }
+
+    public double getConcentration() {
+
+        return _concentration;
+    }
+
+    public SpotLight setConcentration(double concentration) {
+        this._concentration = concentration;
+        return this;
     }
 }

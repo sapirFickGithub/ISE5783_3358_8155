@@ -23,4 +23,10 @@ public class AmbientLight extends Light {
     public AmbientLight() {
         super(Color.BLACK);
     }
+
+    /**
+     * constant for no light
+     */
+    public static AmbientLight NONE = new AmbientLight();
+
 }
