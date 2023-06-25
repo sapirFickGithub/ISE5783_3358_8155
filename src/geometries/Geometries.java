@@ -39,4 +39,17 @@ public class Geometries extends Intersectable {
         }
         return points;
     }
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance){
+        LinkedList<GeoPoint> points=null;
+        for(var geometry: _intersectables){
+            var geometryList=geometry.findGeoIntersections(ray,maxDistance);
+            if(geometryList!=null){
+                if(points==null){
+                    points=new LinkedList<>();
+                }
+                points.addAll(geometryList);
+            }
+        }
+        return points;
+    }
 }

@@ -182,4 +182,66 @@ public class Tube extends Geometry {
         }
         return null;
     }
-}
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) {
+        Vector v = ray.getDir();
+        Vector va = this._axisRay.getDir();
+
+        //if vectors are parallel then there is no intersections possible
+        if (v.normalize().equals(va.normalize()))
+            return null;
+
+        //use of calculated variables to avoid vector ZERO
+        double vva;
+        double pva;
+        double a;
+        double b;
+        double c;
+
+        //check every variable to avoid ZERO vector
+        if (ray.getP0().equals(this._axisRay.getP0())) {
+            vva = v.dotProduct(va);
+            if (vva == 0) {
+                a = v.dotProduct(v);
+            } else {
+                a = (v.subtract(va.scale(vva))).dotProduct(v.subtract(va.scale(vva)));
+            }
+            b = 0;
+            c = -_radius * _radius;
+        } else {
+            Vector deltaP = ray.getP0().subtract(this._axisRay.getP0());
+            vva = v.dotProduct(va);
+            pva = deltaP.dotProduct(va);
+
+            if (isZero(vva) && isZero(pva)) {
+                a = v.dotProduct(v);
+                b = 2 * v.dotProduct(deltaP);
+                c = deltaP.dotProduct(deltaP) - _radius * _radius;
+            } else if (isZero(vva)) {
+                a = v.dotProduct(v);
+                if (deltaP.equals(va.scale(deltaP.dotProduct(va)))) {
+                    b = 0;
+                    c = -_radius * _radius;
+                } else {
+                    b = 2 * v.dotProduct(deltaP.subtract(va.scale(deltaP.dotProduct(va))));
+                    c = (deltaP.subtract(va.scale(deltaP.dotProduct(va))).dotProduct(deltaP.subtract(va.scale(deltaP.dotProduct(va))))) - _radius * _radius;
+                }
+            } else if (isZero(pva)) {
+                a = (v.subtract(va.scale(vva))).dotProduct(v.subtract(va.scale(vva)));
+                b = 2 * v.subtract(va.scale(vva)).dotProduct(deltaP);
+                c = (deltaP.dotProduct(deltaP)) - _radius * _radius;
+            } else {
+                a = (v.subtract(va.scale(vva))).dotProduct(v.subtract(va.scale(vva)));
+                if (deltaP.equals(va.scale(deltaP.dotProduct(va)))) {
+                    b = 0;
+                    c = -_radius * _radius;
+                } else {
+                    b = 2 * v.subtract(va.scale(vva)).dotProduct(deltaP.subtract(va.scale(deltaP.dotProduct(va))));
+                    c = (deltaP.subtract(va.scale(deltaP.dotProduct(va))).dotProduct(deltaP.subtract(va.scale(deltaP.dotProduct(va))))) - _radius * _radius;
+                }
+            }
+        }
+        return null;
+    }
+
+    }
+

@@ -40,4 +40,7 @@ public class SpotLight extends PointLight{
         this._concentration = concentration;
         return this;
     }
+    public double getDistance(Point point){
+        return _position.distance(point);
+    }
 }

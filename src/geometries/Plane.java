@@ -148,5 +148,39 @@ public class Plane extends Geometry {
         }
         return List.of(new GeoPoint(this,ray.getPoint(t)));
     }
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance){
+        Point p0=ray.getP0();
+        Vector v= ray.getDir();
+        Vector n= _normal;
 
+        if(p0.equals(_q0)) {
+            return null;
+        }
+
+        double nv= n.dotProduct(v);
+        if(isZero(nv)){
+            return null;
+        }
+        Vector p0Q0;
+        try {
+            p0Q0=_q0.subtract(p0);
+        }
+        catch (IllegalArgumentException e){
+            return  null;
+        }
+        double nP0Q0=n.dotProduct(p0Q0);
+        //t should be greater than 0.
+        if(isZero(nP0Q0)){
+            return null;
+        }
+        double t=alignZero(nP0Q0/nv);
+        //t should be greater than 0.
+        if(t<0){
+            return null;
+        }
+        if(t>maxDistance){
+            return null;
+        }
+        return List.of(new GeoPoint(this,ray.getPoint(t)));
+    }
 }

@@ -9,7 +9,7 @@ public class PointLight extends Light implements LightSource {
     /**
      * The position point of the light source in space
      */
-    private Point _position;
+    public Point _position;
 
     /**
      * The specular attenuation factor, required to ensure that the denominator in getIntensity >1
@@ -76,5 +76,8 @@ public class PointLight extends Light implements LightSource {
     @Override
     public Vector getL(Point point) {
         return point.subtract(_position).normalize();
+    }
+    public double getDistance(Point point){
+        return _position.distance(point);
     }
 }

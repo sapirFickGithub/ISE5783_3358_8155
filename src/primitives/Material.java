@@ -15,6 +15,8 @@ public class Material {
      * The shininess factor of the object material type
      */
     public int _nShininess = 0;
+    public Double3 _Kt=Double3.ZERO;
+    public Double3 _Kr=Double3.ZERO;
 
     /**
      * Set the diffuse attenuation factor
@@ -66,6 +68,26 @@ public class Material {
      */
     public Material setShininess(int nShininess) {
         _nShininess = nShininess;
+        return this;
+    }
+
+    public Material setKt(Double3 kt) {
+        _Kt = kt;
+        return this;
+    }
+
+    public Material setKr(Double3 kr) {
+        _Kr = kr;
+        return this;
+    }
+
+    public Material setKt(double kt) {
+        _Kt = new Double3(kt);
+        return this;
+    }
+
+    public Material setKr(double kr) {
+        _Kr = new Double3(kr);
         return this;
     }
 }

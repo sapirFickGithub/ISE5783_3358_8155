@@ -2,6 +2,7 @@ package lighting;
 
 import primitives.Color;
 import primitives.Double3;
+import primitives.Point;
 
 /**
  * Ambient Light for all the object in scene.
@@ -29,4 +30,7 @@ public class AmbientLight extends Light {
      */
     public static AmbientLight NONE = new AmbientLight();
 
+    double getDistance(Point point){
+        return Double.POSITIVE_INFINITY;
+    }
 }
