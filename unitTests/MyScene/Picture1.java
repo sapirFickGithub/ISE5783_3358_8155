@@ -46,7 +46,7 @@ public class Picture1 {
         Point R=new Point(-150,90,-250);
         Point S=new Point(-90,155,-250);
 
-        //Scene scene = new Scene.SceneBuilder("Test scene").build();//
+
         Camera camera = new Camera(new Point(0, 0, 1000), new Vector(0,0,-1), new Vector(1,0,0)) //
                 .setVPDistance(600).setVPSize(200, 200); //
         scene.getGeometries().add(
@@ -70,54 +70,54 @@ public class Picture1 {
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setKt(0.8).setShininess(20)),
                 new Sphere(new Point(-35,50,-300),10).setEmission(new Color(PINK))
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setKt(0.8).setShininess(20)),
-                new Polygon(A,B,C,D)
-                        .setEmission(new Color(WHITE))
-                        .setMaterial(new Material().setKd(0.5).setKs(0.1).setKt(0).setKr(0).setShininess(20)),
-                new Polygon(E,F,G,H)
-                        .setEmission(new Color(WHITE))
-                        .setMaterial(new Material().setKd(0.5).setKs(0.1).setKt(0).setKr(0).setShininess(20)),
-                new Polygon(A,D,H,E)
-                        .setEmission(new Color(WHITE))
-                        .setMaterial(new Material().setKd(0.5).setKs(0.1).setKt(0).setKr(0).setShininess(20)),
-                new Polygon(G,H,D,C)
-                        .setEmission(new Color(WHITE))
-                        .setMaterial(new Material().setKd(0.5).setKs(0.1).setKt(0).setKr(0).setShininess(20)),
-                new Polygon(G,F,B,C)
-                        .setEmission(new Color(WHITE))
-                        .setMaterial(new Material().setKd(0.5).setKs(0.1).setKt(0).setKr(0).setShininess(20)),
-                new Polygon(E,F,B,A)
-                        .setEmission(new Color(WHITE))
-                        .setMaterial(new Material().setKd(0.5).setKs(1).setKt(0).setShininess(20)),
-                new Polygon(L,M,K,J)
-                        .setEmission(new Color(51,204,255))
-                        .setMaterial(new Material().setKd(0.5).setKs(1).setKt(0.5).setShininess(20)),
-                new Polygon(G,C,J,L)
-                        .setEmission(new Color(51,204,255))
-                        .setMaterial(new Material().setKd(0.5).setKs(1).setKt(0.5).setShininess(20)),
-                new Polygon(M,H,D,K)
-                        .setEmission(new Color(51,204,255))
-                        .setMaterial(new Material().setKd(0.5).setKs(1).setKt(0.5).setShininess(20)),
-                new Polygon(G,H,M,L)
-                        .setEmission(new Color(51,204,255))
-                        .setMaterial(new Material().setKd(0.5).setKs(1).setKt(0.5).setShininess(20)),
-                new Polygon(C,D,K,J)
-                        .setEmission(new Color(51,204,255))
-                        .setMaterial(new Material().setKd(0.5).setKs(1).setKt(0.5).setShininess(20)),
-                new Polygon(N,O,Q,P)
-                        .setEmission(new Color(51,204,255))
-                        .setMaterial(new Material().setKd(0.5).setKs(1).setKt(0.5).setShininess(20)),
-                new Polygon(Q,G,C,O)
-                        .setEmission(new Color(51,204,255))
-                        .setMaterial(new Material().setKd(0.5).setKs(1).setKt(0.5).setShininess(20)),
-                new Polygon(P,F,B,N)
-                        .setEmission(new Color(51,204,255))
-                        .setMaterial(new Material().setKd(0.5).setKs(1).setKt(0.5).setShininess(20)),
-                new Polygon(N,B,C,O)
-                        .setEmission(new Color(51,204,255))
-                        .setMaterial(new Material().setKd(0.5).setKs(1).setKt(0.5).setShininess(20)),
-                new Polygon(P,F,G,Q)
-                        .setEmission(new Color(51,204,255))
-                        .setMaterial(new Material().setKd(0.5).setKs(1).setKt(0.5).setShininess(20)),
+//                new Polygon(A,B,C,D)
+//                        .setEmission(new Color(WHITE))
+//                        .setMaterial(new Material().setKd(0.5).setKs(0.1).setKt(0).setKr(0).setShininess(20)),
+//                new Polygon(E,F,G,H)
+//                        .setEmission(new Color(WHITE))
+//                        .setMaterial(new Material().setKd(0.5).setKs(0.1).setKt(0).setKr(0).setShininess(20)),
+//                new Polygon(A,D,H,E)
+//                        .setEmission(new Color(WHITE))
+//                        .setMaterial(new Material().setKd(0.5).setKs(0.1).setKt(0).setKr(0).setShininess(20)),
+//                new Polygon(G,H,D,C)
+//                        .setEmission(new Color(WHITE))
+//                        .setMaterial(new Material().setKd(0.5).setKs(0.1).setKt(0).setKr(0).setShininess(20)),
+//                new Polygon(G,F,B,C)
+//                        .setEmission(new Color(WHITE))
+//                        .setMaterial(new Material().setKd(0.5).setKs(0.1).setKt(0).setKr(0).setShininess(20)),
+//                new Polygon(E,F,B,A)
+//                        .setEmission(new Color(WHITE))
+//                        .setMaterial(new Material().setKd(0.5).setKs(1).setKt(0).setShininess(20)),
+//                new Polygon(L,M,K,J)
+//                        .setEmission(new Color(51,204,255))
+//                        .setMaterial(new Material().setKd(0.5).setKs(1).setKt(0.5).setShininess(20)),
+//                new Polygon(G,C,J,L)
+//                        .setEmission(new Color(51,204,255))
+//                        .setMaterial(new Material().setKd(0.5).setKs(1).setKt(0.5).setShininess(20)),
+//                new Polygon(M,H,D,K)
+//                        .setEmission(new Color(51,204,255))
+//                        .setMaterial(new Material().setKd(0.5).setKs(1).setKt(0.5).setShininess(20)),
+//                new Polygon(G,H,M,L)
+//                        .setEmission(new Color(51,204,255))
+//                        .setMaterial(new Material().setKd(0.5).setKs(1).setKt(0.5).setShininess(20)),
+//                new Polygon(C,D,K,J)
+//                        .setEmission(new Color(51,204,255))
+//                        .setMaterial(new Material().setKd(0.5).setKs(1).setKt(0.5).setShininess(20)),
+//                new Polygon(N,O,Q,P)
+//                        .setEmission(new Color(51,204,255))
+//                        .setMaterial(new Material().setKd(0.5).setKs(1).setKt(0.5).setShininess(20)),
+//                new Polygon(Q,G,C,O)
+//                        .setEmission(new Color(51,204,255))
+//                        .setMaterial(new Material().setKd(0.5).setKs(1).setKt(0.5).setShininess(20)),
+//                new Polygon(P,F,B,N)
+//                        .setEmission(new Color(51,204,255))
+//                        .setMaterial(new Material().setKd(0.5).setKs(1).setKt(0.5).setShininess(20)),
+//                new Polygon(N,B,C,O)
+//                        .setEmission(new Color(51,204,255))
+//                        .setMaterial(new Material().setKd(0.5).setKs(1).setKt(0.5).setShininess(20)),
+//                new Polygon(P,F,G,Q)
+//                        .setEmission(new Color(51,204,255))
+//                        .setMaterial(new Material().setKd(0.5).setKs(1).setKt(0.5).setShininess(20)),
                 new Triangle(Q,O,R)
                         .setEmission(new Color(51,204,255))
                         .setMaterial(new Material().setKd(0.5).setKs(1).setKt(0.5).setShininess(20)),
@@ -142,13 +142,16 @@ public class Picture1 {
                 new Triangle(L,J,K)
                         .setEmission(new Color(51,204,255))
                         .setMaterial(new Material().setKd(0.5).setKs(1).setKt(0.5).setShininess(20)),
+
                 new Sphere(new Point(90, 130, -300),20).setEmission(new Color(ORANGE))   //light
-                        .setMaterial(new Material().setKd(0.5).setKs(0.8).setKt(1)),
+                        .setMaterial(new Material().setKd(0.5).setKs(0.7).setKt(1)),
+
                 new Triangle(new Point(94,130,-300),new Point(300,130,-300),new Point(300,130,-250))
                         .setEmission(new Color(102,0,153)),
                 new Triangle(new Point(-105,200,700),new Point(-105,5,700),new Point(-105,5,-2500))
                         .setEmission(new Color(173, 216, 230))
                         .setMaterial(new Material().setKd(0.5).setKs(0.5).setKt(0.1).setKr(0.1).setShininess(20)),
+
                 new Plane(new Point(-1000,28,0),new Point(90,5,0),new Point(-105,33,-2034))
                         .setEmission(new Color(GRAY))
                         .setMaterial(new Material().setKd(0.5).setKs(0.5).setKr(0.25))
