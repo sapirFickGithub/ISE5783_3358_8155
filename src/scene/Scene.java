@@ -12,7 +12,7 @@ public class Scene {
 
     private final String _name;                 //scene name
     private final Color _background;           //background color
-    private final AmbientLight _ambientLight; //ambient light
+    private AmbientLight _ambientLight; //ambient light
     private final Geometries _geometries;    //composite for all geometric object
 
     /**
@@ -32,8 +32,20 @@ public class Scene {
         _lights=builder._lights;
     }
 
+    public Scene(String testScene) {
+        _name = testScene;
+        _background = Color.BLACK;
+        _ambientLight = new AmbientLight();
+        _geometries = new Geometries();
+        _lights = new LinkedList<>();
+    }
+
     public List<LightSource> getLights() {
         return _lights;
+    }
+
+    public void setAmbientLight(AmbientLight ambientLight) {
+        _ambientLight = ambientLight;
     }
 
     /**
