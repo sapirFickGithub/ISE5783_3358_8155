@@ -31,6 +31,12 @@ public class Sphere extends Geometry {
         _radius = radius;
     }
 
+    public Sphere(int i, Point point) {
+        super();
+        _center = point;
+        _radius = i;
+    }
+
     /**
      * Returns the center point of the sphere.
      *
