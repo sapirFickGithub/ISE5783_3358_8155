@@ -9,117 +9,115 @@ import java.util.MissingResourceException;
 
 import static primitives.Util.isZero;
 
-
 /**
- * Class to implement Camera to render the picture.
+ * Class to implement a Camera for rendering the picture.
  */
 public class Camera {
 
-    private Point _p0;
-    private Vector _vTo;
-    private Vector _vUp;
-    private Vector _vRight;
+    private Point _p0; // The location of the camera
+    private Vector _vTo; // The towards direction of the camera
+    private Vector _vUp; // The up direction of the camera
+    private Vector _vRight; // The right direction of the camera
 
-    private double _distance;
+    private double _distance; // The distance between the view plane and the camera
 
-    private double _width;
-    private double _height;
+    private double _width; // The width of the view plane
+    private double _height; // The height of the view plane
 
-    private ImageWriter _imageWriter;
-    private RayTracerBase _rayTracerBase;
+    private ImageWriter _imageWriter; // The image writer used to write the rendered image
+    private RayTracerBase _rayTracerBase; // The ray tracer used to trace rays and calculate colors
 
     /**
-     * constructor to initialize camera
+     * Constructs a Camera object.
      *
-     * @param p0  - camera's location
-     * @param vTo - camera's towards direction
-     * @param vUp - camera's up direction
+     * @param p0  The location of the camera.
+     * @param vTo The towards direction of the camera.
+     * @param vUp The up direction of the camera.
      */
     public Camera(Point p0, Vector vTo, Vector vUp) {
         _p0 = p0;
 
-        //The vectors vTo and vUp must be orthogonal.
+        // The vectors vTo and vUp must be orthogonal.
         if (!isZero(vTo.dotProduct(vUp))) {
             throw new IllegalArgumentException("The vectors vTo and vUp are not orthogonal");
         }
 
-        //Normalize the vectors.
+        // Normalize the vectors.
         _vTo = vTo.normalize();
         _vUp = vUp.normalize();
         _vRight = _vTo.crossProduct(_vUp);
     }
 
-
     /**
-     * Get p0
+     * Returns the location of the camera.
      *
-     * @return point of the camera position
+     * @return The point representing the camera position.
      */
     public Point getP0() {
         return _p0;
     }
 
     /**
-     * Get vector Vto
+     * Returns the towards direction of the camera.
      *
-     * @return camera's towards direction
+     * @return The vector representing the towards direction.
      */
     public Vector getvTo() {
         return _vTo;
     }
 
     /**
-     * Get vector Vup
+     * Returns the up direction of the camera.
      *
-     * @return camera's up direction
+     * @return The vector representing the up direction.
      */
     public Vector getvUp() {
         return _vUp;
     }
 
     /**
-     * Get vector Vright
+     * Returns the right direction of the camera.
      *
-     * @return camera's right direction
+     * @return The vector representing the right direction.
      */
     public Vector getvRight() {
         return _vRight;
     }
 
     /**
-     * Get distance between the view plane and camera
+     * Returns the distance between the view plane and the camera.
      *
-     * @return distance of the view plane from the camera
+     * @return The distance of the view plane from the camera.
      */
     public double getDistance() {
         return _distance;
     }
 
     /**
-     * Get width of the view plane
+     * Returns the width of the view plane.
      *
-     * @return width of the view plane
+     * @return The width of the view plane.
      */
     public double getWidth() {
         return _width;
     }
 
     /**
-     * Get height of the view plane
+     * Returns the height of the view plane.
      *
-     * @return height of the view plane
+     * @return The height of the view plane.
      */
     public double getHeight() {
         return _height;
     }
 
-    //Chaining methods.
+    // Chaining methods.
 
     /**
-     * Set view plane distance
+     * Sets the distance between the camera and the view plane.
      *
-     * @param distance distance between camara and view plane
-     * @return camera instance
+     * @param distance The distance value.
+     * @return The camera instance.
      */
     public Camera setVPDistance(double distance) {
         _distance = distance;
@@ -127,11 +125,11 @@ public class Camera {
     }
 
     /**
-     * Set view plane size
+     * Sets the size of the view plane.
      *
-     * @param width  width of the view plane
-     * @param height height of the view plane
-     * @return camera instance
+     * @param width  The width of the view plane.
+     * @param height The height of the view plane.
+     * @return The camera instance.
      */
     public Camera setVPSize(double width, double height) {
         _width = width;
@@ -140,28 +138,27 @@ public class Camera {
     }
 
     /**
-     * Constructs a ray from Camera location throw the center of a
-     * pixel (i,j) in the view plane.
+     * Constructs a ray from the camera location through the center of a pixel (i, j) in the view plane.
      *
-     * @param Nx number of pixels in a row of view plane
-     * @param Ny number of pixels in a column of view plane
-     * @param j  number of the pixel in a row
-     * @param i  number of the pixel in a column
-     * @return The ray through pixel's center
+     * @param Nx The number of pixels in a row of the view plane.
+     * @param Ny The number of pixels in a column of the view plane.
+     * @param j  The number of the pixel in a row.
+     * @param i  The number of the pixel in a column.
+     * @return The ray through the pixel's center.
      */
     public Ray constructRay(int Nx, int Ny, int j, int i) {
-        //Image center : Pc= P0 + d * vTo.
+        // Calculate the image center: Pc = P0 + d * vTo.
         Point Pc = _p0.add(_vTo.scale(_distance));
 
-        //Ratio (pixel height and width).
-        double Ry = (double) _height/Ny;
-        double Rx = (double) _width/Nx;
+        // Calculate the ratio of pixel height and width.
+        double Ry = (double) _height / Ny;
+        double Rx = (double) _width / Nx;
 
         Point Pij = Pc;
         double Yi = -(i - (Ny - 1) / 2d) * Ry;
         double Xj = (j - (Nx - 1) / 2d) * Rx;
 
-        //move to middle of pixel i,j
+        // Move to the middle of pixel (i, j).
         if (!isZero(Xj)) {
             Pij = Pij.add(_vRight.scale(Xj));
         }
@@ -169,22 +166,40 @@ public class Camera {
             Pij = Pij.add(_vUp.scale(Yi));
         }
 
-        //Return ray from camera to view plane coordinates (i,j).
+        // Return the ray from the camera to the view plane coordinates (i, j).
         return new Ray(_p0, Pij.subtract(_p0));
     }
 
+    /**
+     * Writes the rendered image to the output file.
+     *
+     * @throws MissingResourceException If the image writer is not set.
+     */
     public void writeToImage() {
         if (_imageWriter == null)
             throw new MissingResourceException("Missing imageWriter", ImageWriter.class.getName(), "");
         _imageWriter.writeToImage();
     }
 
+    /**
+     * Prints a grid on the rendered image.
+     *
+     * @param interval The interval between grid lines.
+     * @param color    The color of the grid lines.
+     * @throws MissingResourceException If the image writer is not set.
+     */
     public void printGrid(int interval, Color color) {
         if (_imageWriter == null)
             throw new MissingResourceException("Missing imageWriter", ImageWriter.class.getName(), "");
         _imageWriter.printGrid(interval, color);
     }
 
+    /**
+     * Renders the image by casting rays through each pixel and calculating the corresponding color.
+     *
+     * @return The camera instance.
+     * @throws UnsupportedOperationException If the image writer or ray tracer is not set.
+     */
     public Camera renderImage() {
         try {
             if (_imageWriter == null)
@@ -202,27 +217,35 @@ public class Camera {
                 }
             }
             return this;
-        }
-        catch (MissingResourceException e) {
+        } catch (MissingResourceException e) {
             throw new UnsupportedOperationException("No implementation" + e.getClassName());
         }
     }
-
 
     private Color castRay(int nX, int nY, int j, int i) {
         Ray ray = constructRay(nX, nY, j, i);
         return _rayTracerBase.traceRay(ray);
     }
 
+    /**
+     * Sets the image writer for the camera.
+     *
+     * @param imageWriter The image writer to set.
+     * @return The camera instance.
+     */
     public Camera setImageWriter(ImageWriter imageWriter) {
         _imageWriter = imageWriter;
         return this;
     }
 
+    /**
+     * Sets the ray tracer for the camera.
+     *
+     * @param rayTracerBase The ray tracer to set.
+     * @return The camera instance.
+     */
     public Camera setRayTracer(RayTracerBase rayTracerBase) {
         _rayTracerBase = rayTracerBase;
         return this;
     }
-
-
 }

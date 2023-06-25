@@ -6,9 +6,10 @@ import primitives.*;
 import static primitives.Util.*;
 
 /**
- * Polygon class represents two-dimensional polygon in 3D Cartesian coordinate
- * system
- * 
+ * Polygon class represents a two-dimensional polygon in 3D Cartesian coordinate system.
+ * A polygon is defined by a list of ordered vertices and lies on an associated plane.
+ * The polygon must be convex.
+ *
  * @author Dan
  */
 public class Polygon extends Geometry {
@@ -17,29 +18,23 @@ public class Polygon extends Geometry {
 	 */
 	protected List<Point> vertices;
 	/**
-	 * Associated plane in which the polygon lays
+	 * Associated plane in which the polygon lies
 	 */
 	protected Plane plane;
 	private int size;
 
 	/**
-	 * Polygon constructor based on vertices list. The list must be ordered by edge
-	 * path. The polygon must be convex.
-	 * 
-	 * @param vertices list of vertices according to their order by edge path
-	 * @throws IllegalArgumentException in any case of illegal combination of
-	 *                                  vertices:
+	 * Constructs a polygon based on a list of vertices.
+	 * The list must be ordered by the edge path of the polygon, and the polygon must be convex.
+	 *
+	 * @param vertices A list of vertices in the order of the edge path.
+	 * @throws IllegalArgumentException If the combination of vertices is illegal:
 	 *                                  <ul>
 	 *                                  <li>Less than 3 vertices</li>
-	 *                                  <li>Consequent vertices are in the same
-	 *                                  point
-	 *                                  <li>The vertices are not in the same
-	 *                                  plane</li>
-	 *                                  <li>The order of vertices is not according
-	 *                                  to edge path</li>
-	 *                                  <li>Three consequent vertices lay in the
-	 *                                  same line (180&#176; angle between two
-	 *                                  consequent edges)
+	 *                                  <li>Consecutive vertices are in the same point</li>
+	 *                                  <li>The vertices are not in the same plane</li>
+	 *                                  <li>The order of vertices is not according to the edge path</li>
+	 *                                  <li>Three consecutive vertices lie on the same line (180&#176; angle between two consecutive edges)</li>
 	 *                                  <li>The polygon is concave (not convex)</li>
 	 *                                  </ul>
 	 */
@@ -62,20 +57,17 @@ public class Polygon extends Geometry {
 		Vector edge2 = vertices[0].subtract(vertices[vertices.length - 1]);
 
 		// Cross Product of any subsequent edges will throw an IllegalArgumentException
-		// because of Zero Vector if they connect three vertices that lay in the same
-		// line.
-		// Generate the direction of the polygon according to the angle between last and
-		// first edge being less than 180 deg. It is hold by the sign of its dot product
-		// with
-		// the normal. If all the rest consequent edges will generate the same sign -
-		// the
-		// polygon is convex ("kamur" in Hebrew).
+		// because of Zero Vector if they connect three vertices that lie in the same line.
+		// Generate the direction of the polygon according to the angle between the last and
+		// first edge being less than 180 deg. It is held by the sign of its dot product with
+		// the normal. If all the rest of the consecutive edges generate the same sign, the
+		// polygon is convex.
 		boolean positive = edge1.crossProduct(edge2).dotProduct(n) > 0;
 		for (var i = 1; i < vertices.length; ++i) {
 			// Test that the point is in the same plane as calculated originally
 			if (!isZero(vertices[i].subtract(vertices[0]).dotProduct(n)))
-				throw new IllegalArgumentException("All vertices of a polygon must lay in the same plane");
-			// Test the consequent edges have
+				throw new IllegalArgumentException("All vertices of a polygon must lie in the same plane");
+			// Test the consecutive edges
 			edge1 = edge2;
 			edge2 = vertices[i].subtract(vertices[i - 1]);
 			if (positive != (edge1.crossProduct(edge2).dotProduct(n) > 0))
@@ -89,14 +81,12 @@ public class Polygon extends Geometry {
 		return plane.getNormal();
 	}
 
-
 	@Override
 	protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
-
 		List<GeoPoint> intersections = plane.findGeoIntersections(ray);
 
-		//Check if the plane of the polygon intersects with the ray ,if there's no intersection with the
-		//plane so there's no intersection with the polygon.
+		// Check if the plane of the polygon intersects with the ray. If there's no intersection with the
+		// plane, then there's no intersection with the polygon.
 		if (intersections == null)
 			return null;
 
@@ -104,7 +94,6 @@ public class Polygon extends Geometry {
 		Vector v = ray.getDir();
 
 		Vector v1 = vertices.get(1).subtract(p0);
-
 		Vector v2 = vertices.get(0).subtract(p0);
 
 		double sign = v.dotProduct(v1.crossProduct(v2));
@@ -126,13 +115,21 @@ public class Polygon extends Geometry {
 				return null;
 		}
 
-		return List.of(new GeoPoint(this,intersections.get(0).point));
+		return List.of(new GeoPoint(this, intersections.get(0).point));
 	}
-	public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance){
-		List<GeoPoint> intersections = plane.findGeoIntersections(ray,maxDistance);
 
-		//Check if the plane of the polygon intersects with the ray ,if there's no intersection with the
-		//plane so there's no intersection with the polygon.
+	/**
+	 * Finds the geometric intersection points between the polygon and a given ray.
+	 *
+	 * @param ray The ray to intersect with the polygon.
+	 * @param maxDistance The maximum distance for intersection points.
+	 * @return A list of geometric intersection points represented as {@link GeoPoint}.
+	 */
+	public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) {
+		List<GeoPoint> intersections = plane.findGeoIntersections(ray, maxDistance);
+
+		// Check if the plane of the polygon intersects with the ray. If there's no intersection with the
+		// plane, then there's no intersection with the polygon.
 		if (intersections == null)
 			return null;
 
@@ -140,7 +137,6 @@ public class Polygon extends Geometry {
 		Vector v = ray.getDir();
 
 		Vector v1 = vertices.get(1).subtract(p0);
-
 		Vector v2 = vertices.get(0).subtract(p0);
 
 		double sign = v.dotProduct(v1.crossProduct(v2));
@@ -162,6 +158,6 @@ public class Polygon extends Geometry {
 				return null;
 		}
 
-		return List.of(new GeoPoint(this,intersections.get(0).point));
+		return List.of(new GeoPoint(this, intersections.get(0).point));
 	}
 }

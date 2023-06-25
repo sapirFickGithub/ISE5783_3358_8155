@@ -12,12 +12,10 @@ import java.util.logging.Logger;
 
 
 /**
- * Image writer class combines accumulation of pixel color matrix and finally
- * producing a non-optimized jpeg image from this matrix. The class although is
- * responsible of holding image related parameters of View Plane - pixel matrix
- * size and resolution
- *
- * @author Dan
+ * ImageWriter class combines accumulation of pixel color matrix and finally
+ * produces a non-optimized JPEG image from this matrix. The class is also
+ * responsible for holding image-related parameters of the View Plane - pixel matrix
+ * size and resolution.
  */
 public class ImageWriter {
     private int _nX;
@@ -30,45 +28,41 @@ public class ImageWriter {
 
     private Logger logger = Logger.getLogger("ImageWriter");
 
-    // ***************** Constructors ********************** //
     /**
-     * Image Writer constructor accepting image name and View Plane parameters,
-     * @param imageName the name of jpeg file
-     * @param _nX        amount of pixels by Width
-     * @param nY        amount of pixels by height
+     * ImageWriter constructor accepting image name and View Plane parameters.
+     *
+     * @param imageName The name of the JPEG file
+     * @param nX        The number of pixels in the X direction
+     * @param nY        The number of pixels in the Y direction
      */
-    public ImageWriter(String imageName, int _nX, int nY) {
+    public ImageWriter(String imageName, int nX, int nY) {
         this.imageName = imageName;
-        this._nX = _nX;
+        this._nX = nX;
         this._nY = nY;
 
-        image = new BufferedImage(_nX, nY, BufferedImage.TYPE_INT_RGB);
+        image = new BufferedImage(nX, nY, BufferedImage.TYPE_INT_RGB);
     }
 
-    // ***************** Getters/Setters ********************** //
     /**
-     * View Plane Y axis resolution
+     * Returns the number of pixels in the Y direction (vertical resolution).
      *
-     * @return the amount of vertical pixels
+     * @return The number of vertical pixels
      */
     public int getNy() {
         return _nY;
     }
 
     /**
-     * View Plane X axis resolution
+     * Returns the number of pixels in the X direction (horizontal resolution).
      *
-     * @return the amount of horizontal pixels
+     * @return The number of horizontal pixels
      */
     public int getNx() {
         return _nX;
     }
 
-    // ***************** Operations ******************** //
-
     /**
-     * Function writeToImage produces unoptimized png file of the image according to
-     * pixel color matrix in the directory of the project
+     * Writes the pixel color matrix to an unoptimized PNG file in the project directory.
      */
     public void writeToImage() {
         try {
@@ -77,34 +71,36 @@ public class ImageWriter {
         } catch (IOException e) {
             logger.log(Level.SEVERE, "I/O error", e);
             throw new IllegalStateException("I/O error - may be missing directory " + FOLDER_PATH, e);
-
         }
     }
 
     /**
-     * The function writePixel writes a color of a specific pixel into pixel color
-     * matrix
+     * Writes the color of a specific pixel into the pixel color matrix.
      *
-     * @param xIndex X axis index of the pixel
-     * @param yIndex Y axis index of the pixel
-     * @param color  final color of the pixel
+     * @param xIndex The X-axis index of the pixel
+     * @param yIndex The Y-axis index of the pixel
+     * @param color  The final color of the pixel
      */
     public void writePixel(int xIndex, int yIndex, Color color) {
         image.setRGB(xIndex, yIndex, color.getColor().getRGB());
     }
 
-
-    public void fillBackground(Color bacckColor) {
+    /**
+     * Fills the entire image with a specified background color.
+     *
+     * @param backgroundColor The background color to fill the image with
+     */
+    public void fillBackground(Color backgroundColor) {
         Graphics2D graphics2D = image.createGraphics();
-        graphics2D.setColor(bacckColor.getColor());
+        graphics2D.setColor(backgroundColor.getColor());
         graphics2D.fillRect(0, 0, _nX, _nY);
     }
 
     /**
      * Prints a grid pattern by writing pixels of a specified color.
      *
-     * @param spaceLine The spacing between grid lines.
-     * @param color The color to use for the grid lines.
+     * @param spaceLine The spacing between grid lines
+     * @param color     The color to use for the grid lines
      */
     public void printGrid(int spaceLine, Color color) {
         // Iterate over the rows of the grid
@@ -119,5 +115,4 @@ public class ImageWriter {
             }
         }
     }
-
 }
