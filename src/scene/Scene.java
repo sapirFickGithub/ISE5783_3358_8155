@@ -11,7 +11,7 @@ import java.util.List;
 public class Scene {
 
     private final String _name;                 //scene name
-    private final Color _background;           //background color
+    private  Color _background;           //background color
     private AmbientLight _ambientLight; //ambient light
     private final Geometries _geometries;    //composite for all geometric object
 
@@ -46,6 +46,11 @@ public class Scene {
 
     public void setAmbientLight(AmbientLight ambientLight) {
         _ambientLight = ambientLight;
+    }
+
+    public Scene setBackground(Color color) {
+        _background = color;
+        return this;
     }
 
     /**

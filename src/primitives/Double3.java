@@ -11,6 +11,7 @@ import static primitives.Util.*;
  *
  */
 public class Double3 {
+	public static final Double3 ZERO = new Double3(0, 0, 0);
 	double _d1;
 	double _d2;
 	double _d3;
@@ -18,7 +19,7 @@ public class Double3 {
 	/**
 	 * Zero triad (0,0,0)
 	 */
-	static final Double3 ZERO = new Double3(0, 0, 0);
+
 
 	/**
 	 * Constructor to initialize Double3 based object with its three number values
@@ -111,8 +112,11 @@ public class Double3 {
 	 * @param rhs right handle side operand for product
 	 * @return result of product
 	 */
-	Double3 product(Double3 rhs) {
+	public Double3 product(Double3 rhs) {
 		return new Double3(_d1 * rhs._d1, _d2 * rhs._d2, _d3 * rhs._d3);
 	}
 
+    public boolean lowerThan(double minCalcColorK) {
+		return _d1 < minCalcColorK || _d2 < minCalcColorK || _d3 < minCalcColorK;
+    }
 }

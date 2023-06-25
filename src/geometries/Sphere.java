@@ -25,6 +25,12 @@ public class Sphere extends Geometry {
         _radius = radius;
     }
 
+    public Sphere(double radius, Point point, Point center) {
+        super();
+        _center = center;
+        _radius = radius;
+    }
+
     /**
      * Returns the center point of the sphere.
      *
