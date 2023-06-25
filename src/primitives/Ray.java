@@ -10,19 +10,17 @@ import geometries.Intersectable.GeoPoint;
 import static primitives.Util.isZero;
 
 /**
- * Ray class represents the set of points on a line that are on one side of a given point on a line called the head of the ray.
- * Defined by point and direction
+ * Ray class represents a ray in 3D space defined by a starting point (head) and a direction vector.
  */
-
 public class Ray {
 
     /**
-     * The distance to move the head of the vector from his current location
+     * The distance to move the head of the ray from its current location
      */
     private static final double DELTA = 0.1;
 
     /**
-     * The head point of the ray
+     * The starting point (head) of the ray
      */
     private final Point _p0;
     /**
@@ -31,10 +29,10 @@ public class Ray {
     private final Vector _dir;
 
     /**
-     * Constructor to initialize the fields with the receiving values.
+     * Constructor to initialize the fields with the provided values.
      *
-     * @param p0  point of the ray
-     * @param dir direction vector of the ray
+     * @param p0  The starting point (head) of the ray
+     * @param dir The direction vector of the ray
      */
     public Ray(Point p0, Vector dir) {
         _p0 = p0;
@@ -42,17 +40,17 @@ public class Ray {
     }
 
     /**
-     * Constructor to initialize new ray with distance of +/- DELTA
+     * Constructor to initialize a new ray with a distance of +/- DELTA from a given point along a normal vector.
      *
-     * @param p0  point of the ray
-     * @param n   normal vector
-     * @param dir direction vector of the ray
+     * @param p0  The starting point (head) of the ray
+     * @param dir The direction vector of the ray
+     * @param n   The normal vector
      */
     public Ray(Point p0, Vector dir, Vector n) {
-        //If the normal vector and the direction vector have the same sign, add +DELTA
-        //otherwise add -DELTA
+        // If the normal vector and the direction vector have the same sign, add +DELTA;
+        // otherwise, add -DELTA.
         double delta = dir.dotProduct(n) >= 0 ? DELTA : -DELTA;
-        //Adding the DELTA to the head of the ray
+        // Adding the DELTA to the starting point of the ray
         _p0 = p0.add(n.scale(delta));
         _dir = dir;
     }
@@ -66,18 +64,18 @@ public class Ray {
     }
 
     /**
-     * Return the head of the ray
+     * Returns the starting point (head) of the ray.
      *
-     * @return The head of the ray (Point)
+     * @return The starting point (head) of the ray (Point)
      */
     public Point getP0() {
         return _p0;
     }
 
     /**
-     * Return the direction Vector
+     * Returns the direction vector of the ray.
      *
-     * @return The direction Vector (Vector)
+     * @return The direction vector of the ray (Vector)
      */
     public Vector getDir() {
         return _dir;
@@ -97,10 +95,10 @@ public class Ray {
     }
 
     /**
-     * Get point at specific distance in the ray direction
+     * Returns the point at a specific distance in the ray's direction.
      *
-     * @param t Distance for reaching new point
-     * @return {@link Point}
+     * @param t Distance from the starting point
+     * @return The point at the specified distance (Point)
      */
     public Point getPoint(double t) {
         if (isZero(t)) {
@@ -110,10 +108,10 @@ public class Ray {
     }
 
     /**
-     * Return the closest point from all intersection points
+     * Returns the closest point from a list of intersection points.
      *
-     * @param points list of intersections
-     * @return {@link Point}
+     * @param points List of intersection points
+     * @return The closest point from the list (Point)
      */
     public Point findClosestPoint(List<Point> points) {
         return points == null || points.isEmpty() ? null
@@ -121,31 +119,30 @@ public class Ray {
     }
 
     /**
-     * Find the closest point to the head of the ray from the receiving GeoPoints list as parameter
+     * Finds the closest point to the starting point of the ray from a list of GeoPoints.
      *
-     * @param geoPointList list of intersections
-     * @return {@link GeoPoint} The closest point to the head of the ray from the receiving point list(GeoPoint)
+     * @param geoPointList List of GeoPoints representing intersection points
+     * @return The closest GeoPoint to the starting point of the ray (GeoPoint)
      */
-
     public GeoPoint findClosestGeoPoint(List<GeoPoint> geoPointList) {
         if (geoPointList == null)
             return null;
         GeoPoint closestPoint = null;
 
-        //The initial distance to compare with the rest of the list
-        //is the distance between the head of the ray and the first point in the list
+        // The initial distance to compare with the rest of the list
+        // is the distance between the starting point of the ray and the first point in the list
         double distance = Double.MAX_VALUE;
         double d;
         if (!geoPointList.isEmpty()) {
             // Calculate and compare the distance between the rest of the points in the list
             for (var geoPoint : geoPointList) {
                 d = _p0.distance(geoPoint.point);
-                //Compare the distance between the distance were found until now and the
-                //distance of the new GeoPoint
+                // Compare the distance between the distance found so far and the
+                // distance of the new GeoPoint
                 if (d < distance) {
-                    //Update the new minimum distance to compare with
+                    // Update the new minimum distance to compare with
                     distance = d;
-                    //Update the closest point to be the new point
+                    // Update the closest point to be the new point
                     closestPoint = geoPoint;
                 }
             }

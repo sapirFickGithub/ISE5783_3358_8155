@@ -25,18 +25,6 @@ public class Sphere extends Geometry {
         _radius = radius;
     }
 
-    public Sphere(double radius, Point point, Point center) {
-        super();
-        _center = center;
-        _radius = radius;
-    }
-
-    public Sphere(int i, Point point) {
-        super();
-        _center = point;
-        _radius = i;
-    }
-
     /**
      * Returns the center point of the sphere.
      *
@@ -129,6 +117,14 @@ public class Sphere extends Geometry {
         }
         return null;
     }
+
+    /**
+     * Finds the geometric intersection points between the sphere and a given ray.
+     *
+     * @param ray The ray to intersect with the sphere.
+     * @param maxDistance The maximum distance for intersection points.
+     * @return A list of geometric intersection points represented as {@link GeoPoint}.
+     */
     public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance){
         Point p0 = ray.getP0();
         Point O = _center;
@@ -155,11 +151,11 @@ public class Sphere extends Geometry {
         if (t1 > 0 && t2 > 0) {
             Point p1 = ray.getPoint(t1);
             Point p2 = ray.getPoint(t2);
-            if(p1.distance(p0)<=maxDistance && p2.distance(p0)<=maxDistance)
+            if(p1.distance(p0) <= maxDistance && p2.distance(p0) <= maxDistance)
                 return List.of(new GeoPoint(this, p1), new GeoPoint(this, p2));
-            else if(p1.distance(p0)<=maxDistance)
+            else if(p1.distance(p0) <= maxDistance)
                 return List.of(new GeoPoint(this, p1));
-            else if(p2.distance(p0)<=maxDistance)
+            else if(p2.distance(p0) <= maxDistance)
                 return List.of(new GeoPoint(this, p2));
             else
                 return null;
@@ -167,7 +163,7 @@ public class Sphere extends Geometry {
 
         if (t1 > 0) {
             Point p1 = ray.getPoint(t1);
-            if(p1.distance(p0)<=maxDistance)
+            if(p1.distance(p0) <= maxDistance)
                 return List.of(new GeoPoint(this, p1));
             else
                 return null;
@@ -175,7 +171,7 @@ public class Sphere extends Geometry {
 
         if (t2 > 0) {
             Point p2 = ray.getPoint(t2);
-            if(p2.distance(p0)<=maxDistance)
+            if(p2.distance(p0) <= maxDistance)
                 return List.of(new GeoPoint(this, p2));
             else
                 return null;
