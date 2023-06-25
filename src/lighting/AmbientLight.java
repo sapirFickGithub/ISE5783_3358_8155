@@ -33,4 +33,13 @@ public class AmbientLight extends Light {
     double getDistance(Point point){
         return Double.POSITIVE_INFINITY;
     }
+
+    /**
+     * Constructor
+     * @param Ia intensity color
+     * @param Ka constant for intensity
+     */
+    public AmbientLight(Color Ia, double Ka) {
+        super(Ia.scale(new Double3(Ka)));
+    }
 }
